@@ -13,17 +13,20 @@
 
     for (int i = 0; i < [string length]; i++){
         for(int j = 0; j < [openSymbols length]; j++){
-            if ([string characterAtIndex: i] == [openSymbols characterAtIndex: j]) {
+            unichar openCharacter = [openSymbols characterAtIndex: j];
+            if ([string characterAtIndex: i] == openCharacter) {
                 for (int k = i + 1; k < [string length]; k++) {
-                    if ([string characterAtIndex: k] == [openSymbols characterAtIndex: j]) {
+                    unichar substringCharacter = [string characterAtIndex: k];
+                    unichar closeCharacter = [closeSymbols characterAtIndex: j];
+                    if (substringCharacter == openCharacter) {
                         count++;
                         continue;
                     }
-                    if ([string characterAtIndex: k] == [closeSymbols characterAtIndex: j] && count != 0) {
+                    if (substringCharacter == closeCharacter && count != 0) {
                         count--;
                         continue;
                     }
-                    if ([string characterAtIndex: k] == [closeSymbols characterAtIndex: j] && count == 0) {
+                    if (substringCharacter == closeCharacter && count == 0) {
                         [result addObject:[string substringWithRange:NSMakeRange(i + 1, k - i - 1)]];
                         break;
                     }
